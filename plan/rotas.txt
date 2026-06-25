@@ -1,0 +1,253 @@
+# GET	/usuarios	Listar usuários
+
+## Resposta
+
+200
+{
+    "usuarios": [
+        "usuario1",
+        "usuario2",
+        "usuario3",
+    ]
+}
+
+# GET	/usuario	Informações do usuário
+
+## Resposta
+
+200
+{
+    "nome": "usuario",
+    "email": "usuario@email.com",
+    "rendaMensal": "3000,00"
+}
+
+# POST	/usuarios	Criar conta
+
+## Requisição
+
+{
+    "nome": "usuario",
+    "email": "usuario@email.com",
+    "senha": "1234",
+    "rendaMensal": "3000.00"
+}
+
+## Resposta
+
+201
+{
+    "token": "abcd-efgh-000"
+}
+
+# POST	/usuarios/login	Login
+
+## Requisição
+
+{
+    "email": "usuario@email.com",
+    "senha": "1234
+}
+
+## Resposta
+
+200
+{
+    "token": "abcd-efgh-000"
+}
+
+# GET	/transacoes	Listar transações
+
+## Resposta
+
+200
+{
+    "transações": [
+        {
+            "id": 1
+            "nome": "Salário",
+            "valor": "+300,50",
+            "categoria": "Renda fixa",
+            "data": "23-06-2026"
+        },
+        {
+            "id": 2
+            "nome": "Netflix",
+            "valor": "-70,50",
+            "categoria": "Despesa fixa",
+            "data": "25-06-2026"
+        },
+        {
+            "id": 3
+            "nome": "Burguer King",
+            "valor": "-36,25",
+            "categoria": "Alimentação",
+            "data": "21-06-2026"
+        },
+    ]
+}
+
+# POST	/transacoes	Registrar movimentação
+
+## Requisição
+
+{
+    "nome": "Salário",
+    "valor": "+300,50",
+    "categoria": "Renda fixa",
+    "data": "23-06-2026"
+}
+
+## Resposta
+
+201
+{}
+
+# PUT	/transacoes/:id	Editar transação
+
+## Requisição
+
+{
+    "nome": "Novo nome",
+    "valor": "+10,00",
+    "categoria": "Benefício"
+}
+
+## Resposta
+
+204
+{}
+
+DELETE	/transacoes/:id	Excluir transação
+
+## Resposta
+
+204
+{}
+
+# GET	/metas	Listar metas
+
+
+
+## Resposta
+
+200
+{
+    "metas": [
+        {
+            "id": 1,
+            "nome": "Comprar um notebook",
+            "valor": "6000,00",
+            "guardado": "200,65"
+        },
+        {
+            "id": 2
+            "nome": "Casa dos sonhos",
+            "valor": "150000,00",
+            "guardado": "4000,65"
+        },
+        {
+            "id": 3
+            "nome": "Moto tunada",
+            "valor": "30000,00",
+            "guardado": "16170,65"
+        },
+    ]
+}
+
+# GET	/metas/:id	Consultar meta específica
+
+## Resposta
+
+200
+{
+    "id": 1,
+    "nome": "Comprar um notebook",
+    "valor": "6000,00",
+    "guardado": "200,65",
+    "porcentagem": "3,34"
+}
+
+# POST	/metas	Criar meta
+
+## Requisição
+
+{
+    "nome": "Comprar notebook",
+    "valor": "6000,00",
+    "guardado": "200,00"
+}
+
+## Resposta
+
+201
+{}
+
+# PUT	/metas/:id	Atualizar meta
+
+## Requisição
+
+{
+    "nome": "Notebook gamer",
+    "valor": "6000,00",
+    "adicionar": "300,00",
+    "subtrair": "0,00"
+}
+
+## Resposta
+
+204
+{}
+
+# DELETE	/metas/:id	Excluir meta
+
+## Resposta
+
+204
+{}
+
+# GET	/relatorios	Relatório financeiro
+
+## Resposta
+
+204
+"""
+Tabela: Despesas
+nome,categoria,valor
+Aluguel,Moradia,1200.00
+Supermercado,Alimentação,850.50
+Conta de Luz,Utilidades,320.75
+Academia,Saúde,150.00
+Internet,Utilidades,120.90
+SOMA TOTAL DESPESAS,2642.15
+
+Tabela: Receitas
+nome,categoria,valor
+Salário,Trabalho,4500.00
+Freelance,Renda Extra,800.00
+Investimentos,Renda Passiva,250.50
+Aluguel Recebido,Renda Passiva,600.00
+Venda de Roupas,Renda Extra,350.00
+SOMA TOTAL RECEITAS,6500.50
+
+Tabela: Despesa por Categoria
+categoria,despesa_total
+Moradia,1200.00
+Alimentação,850.50
+Utilidades,441.65
+Saúde,150.00
+
+Tabela: Receita por Categoria
+categoria,receita_total
+Trabalho,4500.00
+Renda Extra,1150.00
+Renda Passiva,850.50
+
+Tabela: Lista de Metas
+nome_meta,valor_guardado,valor_faltante
+Viagem Europa,1200.00,3800.00
+Carro Novo,5000.00,25000.00
+Fundo Emergência,3000.00,2000.00
+Curso MBA,800.00,4200.00
+Aposentadoria,15000.00,35000.00
+"""

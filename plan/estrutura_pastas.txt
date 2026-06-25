@@ -1,0 +1,29 @@
+src/
+├── config/
+│   ├── database.ts            # Conexão better-sqlite3
+│   └── schema.sql             # DDL das tabelas
+├── controllers/
+│   ├── UsuarioController.ts
+│   ├── TransacaoController.ts
+│   ├── MetaController.ts
+│   └── RelatorioController.ts
+├── models/
+│   ├── Usuario.ts
+│   ├── Transacao.ts
+│   ├── MetaFinanceira.ts
+│   ├── Categoria.ts
+│   └── Relatorio.ts
+├── routes/
+│   ├── usuarioRoutes.ts
+│   ├── transacaoRoutes.ts
+│   ├── metaRoutes.ts
+│   └── relatorioRoutes.ts
+├── middleware/
+│   └── auth.ts                # Validação de token UUID
+├── services/
+│   ├── CsvExporter.ts         # Geração do CSV (5 seções)
+│   └── TokenService.ts        # Geração/validação de UUID
+├── types/
+│   └── index.ts               # Interfaces TypeScript
+├── app.ts                     # Configuração Express
+└── server.ts                  # Ponto de entrada

@@ -1,0 +1,69 @@
+graph TB
+    subgraph Cliente["📱 Cliente"]
+        HTTP[Requisições HTTP / JSON]
+    end
+
+    subgraph API["🌐 API - GranaConta<br/>(Express + TypeScript + better-sqlite3)"]
+        direction TB
+
+        subgraph Routes["Presentation Layer - Routes"]
+            direction TB
+            R1[usuarioRoutes<br/>GET / POST /login]
+            R2[transacaoRoutes<br/>GET / POST / PUT / DELETE]
+            R3[metaRoutes<br/>GET / POST / PUT / DELETE]
+            R4[relatorioRoutes<br/>GET /]
+        end
+
+        subgraph Middleware["🔐 Security"]
+            M1[AuthMiddleware<br/>Valida token UUID]
+        end
+
+        subgraph Controllers["Application Layer"]
+            C1[UsuarioController]
+            C2[TransacaoController]
+            C3[MetaController]
+            C4[RelatorioController]
+        end
+
+        subgraph Services["Infrastructure Layer"]
+            S1[CsvExporter<br/>Gera texto CSV]
+            S2[TokenService<br/>Gera/valida UUID]
+            S3[DatabaseConfig<br/>better-sqlite3]
+        end
+
+        subgraph Models["Data Models"]
+            M1[Usuario]
+            M2[Transacao]
+            M3[MetaFinanceira]
+            M4[Categoria]
+        end
+    end
+
+    subgraph Database["💾 SQLite"]
+        DB[(granaconta.db)]
+    end
+
+    subgraph Output["📤 Respostas"]
+        CSV[CSV text/plain]
+        JSON[JSON application/json]
+    end
+
+    %% Fluxo de requisição
+    HTTP --> Routes
+    Routes -- rotas protegidas --> M1
+    M1 --> Controllers
+    Controllers --> Services
+    Services --> Models
+    Models --> DB
+
+    %% Fluxo de resposta
+    C4 -- dados brutos --> S1
+    S1 --> CSV
+    Controllers --> JSON
+
+    %% Estilo
+    style Cliente fill:#e1f5fe,stroke:#0288d1,color:#000
+    style API fill:#f3e5f5,stroke:#7b1fa2,color:#000
+    style Middleware fill:#ffebee,stroke:#c62828,color:#000
+    style Database fill:#fff3e0,stroke:#e65100,color:#000
+    style Output fill:#e8f5e9,stroke:#2e7d32,color:#000

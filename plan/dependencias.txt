@@ -1,0 +1,20 @@
+Produção (dependencies)
+{
+  "express": "^5.2.1",
+  "better-sqlite3": "^11.x",
+  "cors": "^2.8.6",
+  "dotenv": "^17.4.2",
+  "json2csv": "^6.x",
+  "uuid": "^10.x"
+}
+Desenvolvimento (devDependencies)
+{
+  "typescript": "^5.x",
+  "@types/express": "^5.x",
+  "@types/better-sqlite3": "^5.x",
+  "@types/cors": "^2.x",
+  "@types/json2csv": "^6.x",
+  "@types/uuid": "^10.x",
+  "@types/node": "^22.x",
+  "tsx": "^4.x"
+}

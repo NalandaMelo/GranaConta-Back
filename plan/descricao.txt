@@ -1,0 +1,1 @@
+este projeto é API do backend de gerenciador financeiro que te permite adicionar receitas, gastos, metas e te gera um relatório mensal

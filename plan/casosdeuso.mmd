@@ -1,0 +1,53 @@
+graph LR
+    %% Definição do Actor
+    Usuario[Usuario]
+
+    %% Sistema Principal
+    subgraph Sistema_Granaconta [Sistema Granaconta]
+        
+        %% Módulo Início
+        subgraph Inicio [Início]
+            ES(Editar Saldo)
+            RM(Registrar Movimentação)
+            RR(Registrar Receita)
+            RG(Registrar Gasto)
+            AGF(Adicionar Gasto Fixo)
+            
+            RR --> RM
+            RG --> RM
+        end
+
+        %% Módulo Relatórios
+        subgraph Relatorios [Relatórios]
+            VIF(Visualizar Informações Financeiras)
+        end
+
+        %% Módulo Acesso
+        subgraph Acesso [Acesso]
+            CC(Cadastrar Conta)
+            EL(Efetuar Login)
+        end
+
+        %% Módulo Metas
+        subgraph Metas [Metas]
+            AM(Adicionar Meta)
+            ADA(Adicionar Data-alvo)
+            ACM(Acompanhar Metas)
+            
+            ADA -.->|&lt;&lt;extend&gt;&gt;| AM
+        end
+
+    end
+
+    %% Ligações do Usuário com os Casos de Uso
+    Usuario --- ES
+    Usuario --- RM
+    Usuario --- AGF
+    Usuario --- VIF
+    Usuario --- CC
+    Usuario --- EL
+    Usuario --- AM
+    Usuario --- ACM
+
+    %% Estilização do Actor para parecer um Boneco de Palito (opcional)
+    style Usuario fill:#fff,stroke:#333,stroke-width:2px;

@@ -1,0 +1,44 @@
+Construa em src/ a API do backend de um gerenciador financeiro chamado "GranaConta"
+
+# Estrutura
+
+- Linguagem de programação TypeScript
+- Banco de dados SQLite
+
++ para entender a arquitetura, use o arquivo plan/arquitetura.mmd
++ o modelo entidade-relacionamento está em plan/entidade_relacionamento.mmd
++ a estrutura de arquivos desejada está em estrutura_pastas.txt
++ as dependencias do projeto estão listas em dependencias.txt
++ o esquema do banco de dados já está pronto em schema.sql
+
+# API
+
+a descrição da API está em plan/rotas.txt, a tabela resumida da API está em plan/rotas.md
+
+# Passo-a-passo
+
+1. Setup TypeScript: criar tsconfig.json com as deps
+2. Database SQLite: config/database.ts, config/schema.sql, popular categorias iniciais
+3. Models: Usuario.ts, Transacao.ts, Categoria.ts, MetaFinanceira.ts
+4. TokenService: services/TokenService.ts — gerar UUID, buscar usuário por token
+5. AuthMiddleware: middleware/auth.ts — extrair token do Authorization: Bearer, injetar req.usuarioId
+6. UsuarioController: Cadastro (201 + token), Login (200 + token), Info (200), Listar (200)
+7. TransacaoController: CRUD completo: valor com sinal (+300,50/-70,50), categoria como FK, data
+8. MetaController: CRUD com nome, valor, guardado, adicionar, subtrair
+9. CsvExporter	services/CsvExporter.ts — montar as 5 seções do CSV
+10. RelatorioController: GET /relatorios → retornar CSV como text/plain; charset=utf-8
+11. Rotas: Ajustar paths e aplicar auth middleware nas rotas protegidas
+12. Atualizar: plan/	Alinhar arquitetura.mmd, dependencias.txt, estrutura_pastas.txt com a versão final
+
+# Observações
+
+1. Valor com sinal: A string "+300,50" vinda do cliente precisa ser convertida para REAL no SQLite (300.50). O controller faz o parsing: substituir , por . e converter com parseFloat.
+2. Data DD-MM-YYYY: Armazenar como TEXT no SQLite. Na resposta da API, devolver no mesmo formato. O controle de ordenação pode ser feito via string (DD-MM-YYYY ordena lexicograficamente, então para ORDER BY por data seria necessário converter ou armazenar como YYYY-MM-DD).
+3. PUT /transacoes/:id não envia data — o controller deve manter a data original.
+4. PUT /metas/:id envia adicionar e subtrair — lógica: guardado = guardado + adicionar - subtrair.
+5. Categorias: Por ser uma entidade separada com relação N:1, o sistema precisa de um conjunto inicial de categorias (semeadas no schema.sql).
+
+# Regras
+
+- o node não está disponível neste ambiente, não tente executar ou testar o projeto
+- caso encontre algum detalhe não especificado, questione antes de executar

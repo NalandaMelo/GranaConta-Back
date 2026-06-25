@@ -1,0 +1,31 @@
+erDiagram
+    %% Entidades
+    USUÁRIO {
+        string nome
+        string email
+        string senha
+        double rendaMensal
+    }
+
+    META {
+        double valor
+        double guardado
+        string nome
+    }
+
+    %% Observe que o valor é positivo para receitas e negativo para gastos
+    TRANSAÇÃO {
+        string nome
+        CATEGORIA categoria
+        double valor
+        string data
+    }
+
+    CATEGORIA {
+        string tipo
+    }
+
+    %% Relações
+    USUÁRIO ||--|{ META: possui
+    USUÁRIO ||--|{ TRANSAÇÃO: possui
+    TRANSAÇÃO }|--|| CATEGORIA: composto
