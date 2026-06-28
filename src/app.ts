@@ -4,6 +4,7 @@ import usuarioRoutes from './routes/usuarioRoutes';
 import transacaoRoutes from './routes/transacaoRoutes';
 import metaRoutes from './routes/metaRoutes';
 import relatorioRoutes from './routes/relatorioRoutes';
+import adminRoutes from './routes/adminRoutes';
 
 /** Instância do aplicativo Express. */
 const app = express();
@@ -17,5 +18,6 @@ app.use('/', usuarioRoutes);          // /usuarios, /usuario
 app.use('/transacoes', transacaoRoutes); // /transacoes
 app.use('/metas', metaRoutes);          // /metas
 app.use('/relatorios', relatorioRoutes); // /relatorios
+app.use('/', adminRoutes);            // /admin/usuario/:id
 
 export default app;

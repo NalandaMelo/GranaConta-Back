@@ -8,6 +8,7 @@ export interface UsuarioRow {
   senha: string;
   rendaMensal: number;
   token: string | null;
+  premium: number;         // 0 = comum, 1 = premium
 }
 
 /**
@@ -72,6 +73,33 @@ export interface MetaResponse {
   nome: string;
   valor: string;
   guardado: string;
+}
+
+/**
+ * Representa uma linha da tabela `transacoes_fixas` no banco SQLite.
+ * `valor` é sempre positivo (magnitude) — o sinal é definido pela categoria.
+ * `data` armazena apenas o dia do mês no formato "DD".
+ */
+export interface TransacaoFixaRow {
+  id: number;
+  nome: string;
+  valor: number;
+  data: string;
+  categoria_id: number;
+  usuario_id: number;
+}
+
+/**
+ * Formato de resposta da API para uma transação fixa.
+ * `valor` é formatado sem sinal (ex: "500,00").
+ * `categoria` é o nome da categoria (ex: "Renda fixa").
+ */
+export interface TransacaoFixaResponse {
+  id: number;
+  nome: string;
+  valor: string;
+  categoria: string;
+  data: string;
 }
 
 /**

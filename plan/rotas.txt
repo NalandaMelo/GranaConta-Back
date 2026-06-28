@@ -46,7 +46,7 @@
 
 {
     "email": "usuario@email.com",
-    "senha": "1234
+    "senha": "1234",
 }
 
 ## Resposta
@@ -123,6 +123,93 @@ DELETE	/transacoes/:id	Excluir transação
 ## Resposta
 
 204
+{}
+
+# GET	/transacoes/fixas	Listar transações fixas
+
+## Resposta
+
+200
+{
+    "fixas": [
+        {
+            "id": 1,
+            "nome": "Salário",
+            "valor": "4500,00",
+            "categoria": "Renda fixa",
+            "data": "05"
+        },
+        {
+            "id": 2,
+            "nome": "Aluguel",
+            "valor": "1200,00",
+            "categoria": "Despesa fixa",
+            "data": "10"
+        }
+    ]
+}
+
+# POST	/transacoes/fixas	Criar transação fixa
+
+## Requisição
+
+{
+    "nome": "Salário",
+    "valor": "4500,00",
+    "categoria": "Renda fixa",
+    "data": "05"
+}
+
+## Resposta
+
+201
+{}
+
+# PUT	/transacoes/fixa/:id	Editar transação fixa
+
+## Requisição
+
+{
+    "nome": "Salário mensal",
+    "valor": "5000,00",
+    "categoria": "Renda fixa",
+    "data": "05"
+}
+
+## Resposta
+
+204
+{}
+
+# DELETE	/transacoes/fixa/:id	Excluir transação fixa
+
+## Resposta
+
+204
+{}
+
+# POST	/transacoes/fixa/:id	Confirmar transação fixa do mês
+
+## Requisição (confirmar)
+
+{
+    "confirmacao": true
+}
+
+## Resposta
+
+201
+{}
+
+## Requisição (ignorar)
+
+{
+    "confirmacao": false
+}
+
+## Resposta
+
+200
 {}
 
 # GET	/metas	Listar metas
@@ -206,11 +293,16 @@ DELETE	/transacoes/:id	Excluir transação
 204
 {}
 
-# GET	/relatorios	Relatório financeiro
+# GET	/relatorios	Relatório financeiro (apenas premium)
 
-## Resposta
+## Observação
 
-204
+Apenas usuários com `premium = 1` podem acessar esta rota.
+Usuários comuns recebem **403** com corpo vazio.
+
+## Resposta (sucesso — premium)
+
+200
 """
 Tabela: Despesas
 nome,categoria,valor
@@ -251,3 +343,28 @@ Fundo Emergência,3000.00,2000.00
 Curso MBA,800.00,4200.00
 Aposentadoria,15000.00,35000.00
 """
+
+## Resposta (negado — não premium)
+
+403
+(corpo vazio)
+
+
+# PATCH	/admin/usuario/:id	Alterar status premium (admin)
+
+## Observação
+
+Requer campo `senhaAdmin` com valor `"1234"` no corpo da requisição.
+Retorna **404** tanto para senha errada quanto para usuário inexistente.
+
+## Requisição
+
+{
+    "senhaAdmin": "1234",
+    "premium": 1
+}
+
+## Resposta
+
+200
+{}

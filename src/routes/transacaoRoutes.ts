@@ -1,8 +1,28 @@
 import { Router } from 'express';
 import { TransacaoController } from '../controllers/TransacaoController';
+import { TransacaoFixaController } from '../controllers/TransacaoFixaController';
 import { authMiddleware } from '../middleware/auth';
 
 const router = Router();
+
+// ── Transações fixas recorrentes (rotas específicas primeiro) ──
+
+/** @route GET /transacoes/fixas — Listar transações fixas */
+router.get('/fixas', authMiddleware, TransacaoFixaController.listar);
+
+/** @route POST /transacoes/fixas — Criar transação fixa */
+router.post('/fixas', authMiddleware, TransacaoFixaController.criar);
+
+/** @route PUT /transacoes/fixa/:id — Editar transação fixa */
+router.put('/fixa/:id', authMiddleware, TransacaoFixaController.editar);
+
+/** @route DELETE /transacoes/fixa/:id — Excluir transação fixa */
+router.delete('/fixa/:id', authMiddleware, TransacaoFixaController.excluir);
+
+/** @route POST /transacoes/fixa/:id — Confirmar transação fixa do mês */
+router.post('/fixa/:id', authMiddleware, TransacaoFixaController.confirmar);
+
+// ── Transações normais ──
 
 /** @route GET /transacoes — Listar transações */
 router.get('/', authMiddleware, TransacaoController.listar);

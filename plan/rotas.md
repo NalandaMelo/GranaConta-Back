@@ -8,9 +8,15 @@
 | POST | /transacoes | ✅ | { nome, valor, categoria, data } | 201 {} |
 | PUT | /transacoes/:id | ✅ | { nome, valor, categoria } (sem data) | 204 {} |
 | DELETE | /transacoes/:id | ✅ | — | 204 {} |
+| GET | /transacoes/fixas | ✅ | — | 200 { "fixas": [...] } |
+| POST | /transacoes/fixas | ✅ | { nome, valor, categoria, data } | 201 {} |
+| PUT | /transacoes/fixa/:id | ✅ | { nome, valor, categoria, data } | 204 {} |
+| DELETE | /transacoes/fixa/:id | ✅ | — | 204 {} |
+| POST | /transacoes/fixa/:id | ✅ | { confirmacao: boolean } | 200/201 {} |
 | GET | /metas | ✅ | — | 200 { "metas": [...] } |
 | GET | /metas/:id | ✅ | — | 200 { id, nome, valor, guardado, porcentagem } |
 | POST | /metas | ✅ | { nome, valor, guardado } | 201 {} |
 | PUT | /metas/:id | ✅ | { nome, valor, adicionar, subtrair } | 204 {} |
 | DELETE | /metas/:id | ✅ | — | 204 {} |
-| GET | /relatorios | ✅ | — | 200 CSV text/plain |
+| GET | /relatorios | ✅ (premium) | — | 200 CSV text/plain / 403 corpo vazio |
+| PATCH | /admin/usuario/:id | senhaAdmin | { senhaAdmin, premium } | 200 / 404 |

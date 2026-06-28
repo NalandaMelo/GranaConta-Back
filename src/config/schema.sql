@@ -4,13 +4,15 @@
 
 -- Armazena os usuários do sistema.
 -- Cada usuário possui um token UUID único usado para autenticação Bearer.
+-- premium: 0 = usuário comum, 1 = usuário premium (acesso a relatórios).
 CREATE TABLE IF NOT EXISTS usuarios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
     senha TEXT NOT NULL,
     rendaMensal REAL NOT NULL,
-    token TEXT
+    token TEXT,
+    premium INTEGER NOT NULL DEFAULT 0
 );
 
 -- Catálogo de categorias de transações (ex: Alimentação, Salário).
@@ -42,6 +44,20 @@ CREATE TABLE IF NOT EXISTS metas (
     valor REAL NOT NULL,
     guardado REAL NOT NULL DEFAULT 0,
     usuario_id INTEGER NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+
+-- Transações fixas recorrentes (Renda fixa / Despesa fixa).
+-- valor: magnitude (sempre positivo). O sinal é definido pela categoria.
+-- data: dia do mês no formato "DD" (ex: "05" = dia 5 de todo mês).
+CREATE TABLE IF NOT EXISTS transacoes_fixas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
+    valor REAL NOT NULL,
+    data TEXT NOT NULL,
+    categoria_id INTEGER NOT NULL,
+    usuario_id INTEGER NOT NULL,
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id),
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 

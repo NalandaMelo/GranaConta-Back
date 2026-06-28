@@ -71,3 +71,19 @@ export function listUsuarios(): Pick<UsuarioRow, 'id' | 'nome' | 'email'>[] {
   const db = getDatabase();
   return db.prepare('SELECT id, nome, email FROM usuarios').all() as Pick<UsuarioRow, 'id' | 'nome' | 'email'>[];
 }
+
+/**
+ * Atualiza o status premium de um usuário.
+ * Usado pela rota de admin para conceder/revogar acesso a relatórios.
+ *
+ * @param id      - ID do usuário.
+ * @param premium - 0 para comum, 1 para premium.
+ * @returns true se o usuário foi encontrado e alterado, false caso contrário.
+ */
+export function updatePremiumStatus(id: number, premium: number): boolean {
+  const db = getDatabase();
+  const result = db.prepare(
+    'UPDATE usuarios SET premium = ? WHERE id = ?'
+  ).run(premium, id);
+  return result.changes > 0;
+}

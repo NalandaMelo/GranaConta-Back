@@ -24,7 +24,11 @@ function formatValor(valor: number): string {
  * Ex: "300,50" → 300.50
  */
 function parseValor(valorStr: string): number {
-  return parseFloat(valorStr.replace(',', '.'));
+    return Number(
+        valorStr
+            .replace(/\./g, "")
+            .replace(",", ".")
+    );
 }
 
 /** Converte uma transação bruta do banco para o formato de resposta da API. */

@@ -100,9 +100,11 @@ export const UsuarioController = {
       }
 
       res.status(200).json({
+        id: usuario.id,
         nome: usuario.nome,
         email: usuario.email,
         rendaMensal: formatRenda(usuario.rendaMensal),
+        premium: usuario.premium,
       });
     } catch (err) {
       res.status(500).json({ erro: 'Erro interno do servidor' });
